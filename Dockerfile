@@ -3,11 +3,9 @@ MAINTAINER IgorSh
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r -g 1000 crawluser && useradd -r -g crawluser -u 1000 crawluser
-
-RUN apt-get update \
-    && apt-get upgrade -y
+# install required packages
+RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y \
-    wget \
     git \
     build-essential \
     libncursesw5-dev \
@@ -24,11 +22,10 @@ RUN apt-get install -y \
     libpng-dev \
     ttf-dejavu-core \
         && rm -rf /var/lib/apt/lists/*
-
 # add gosu for easy step-down from root
 ENV GOSU_VERSION 1.7
 RUN set -x \
-        && apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/* \
+        && apt-get update && apt-get install -y --no-install-recommends ca-certificates wget && rm -rf /var/lib/apt/lists/* \
         && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
         && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
         && export GNUPGHOME="$(mktemp -d)" \
@@ -38,7 +35,7 @@ RUN set -x \
         && chmod +x /usr/local/bin/gosu \
         && gosu nobody true \
         && apt-get purge -y --auto-remove ca-certificates wget
-
+# clone from github latest crawl version
 RUN git clone https://github.com/crawl/crawl.git \
         && cd /crawle \
         && git submodule update --init \
