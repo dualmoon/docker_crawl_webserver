@@ -7,7 +7,8 @@ RUN groupadd -r -g 1000 crawluser && useradd -r -g crawluser -u 1000 crawluser
 RUN apt-get update \
     && apt-get upgrade -y        
 RUN apt-get install -y \
-		git \   
+    wget \
+    git \   
     build-essential \   
     libncursesw5-dev \   
     bison \   
@@ -46,6 +47,8 @@ RUN git clone https://github.com/crawl/crawl.git
 WORKDIR /crawle/crawl-ref/source
 
 VOLUME /crawle
+
+EXPOSE 8080
 
 COPY docker-entrypoint.sh /entrypoint.sh
 RUN chown -R crawluser:crawluser /entrypoint.sh && chmod 777 /entrypoint.sh
