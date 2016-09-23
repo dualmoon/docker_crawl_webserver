@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM debian:jessie
 MAINTAINER IgorSh
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
