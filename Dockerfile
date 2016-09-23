@@ -23,6 +23,7 @@ RUN apt-get install -y \
     ttf-dejavu-core \
     ca-certificates \
     wget \
+    python-pip \
         && rm -rf /var/lib/apt/lists/*
 # add gosu for easy step-down from root
 ENV GOSU_VERSION 1.7
@@ -35,13 +36,15 @@ RUN set -x \
         && rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
         && chmod +x /usr/local/bin/gosu \
         && gosu nobody true 
+# install pip and tornado for web server
+RUN pip install -U pip && pip install 'tornado>=2.3,<4.0'
 # clone from github latest crawl version
 RUN git clone https://github.com/crawl/crawl.git \
         && cd /crawl \
         && git submodule update --init \
         && chown -R crawluser:crawluser /crawl \
         && cd /crawl/crawl-ref/source \
-        && make TILES=y
+        && make TILES=y USE_DGAMELAUNCH=y
 
 WORKDIR /crawl/crawl-ref/source
 
@@ -54,4 +57,4 @@ RUN chown -R crawluser:crawluser /entrypoint.sh && chmod 777 /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 #USER builduser
-CMD ["python webserver/server.py"]
+CMD ["python ./webserver/server.py"]
