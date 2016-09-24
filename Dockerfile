@@ -5,7 +5,7 @@ MAINTAINER IgorSh
 RUN groupadd -r -g 1000 crawluser && useradd -r -g crawluser -u 1000 crawluser
 
 # install required packages
-RUN apt-get update 
+RUN apt-get update \
 	&& apt-get install --no-install-recommends --no-install-suggests -y \
     ca-certificates \
     wget \
