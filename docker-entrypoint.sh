@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
-
-exec gosu crawluser "$@"
+cd /crawl/crawl-ref/source
+exec gosu games "$@"
