@@ -57,7 +57,7 @@ RUN cd /crawl/crawl-ref/source && make WEBTILES=y
 
 COPY docker-entrypoint.sh /entrypoint.sh
 RUN chown -R crawluser:crawluser /entrypoint.sh \
-	&& chmod 777 /entrypoint.sh
+	&& chmod 777 /entrypoint.sh \
 	&& chown -R crawluser:crawluser /crawl
 
 WORKDIR /crawl/crawl-ref/source
