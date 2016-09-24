@@ -27,7 +27,7 @@ RUN set -x \
 # clone from github latest crawl version
 RUN git clone https://github.com/crawl/crawl.git && cd /crawl \
 	&& git checkout 0.18.1 \
-        && git submodule update --init
+        && git submodule update --init \
 	&& mkdir -p /crawl/crawl-ref/source/rcs
 
 # install required packages for crawl build
