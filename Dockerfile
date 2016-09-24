@@ -66,4 +66,4 @@ EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]
 
 #USER crawluser
-CMD ["python ./webserver/server.py"]
+CMD ["python", "./webserver/server.py"]
