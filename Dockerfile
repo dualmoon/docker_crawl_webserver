@@ -2,7 +2,7 @@ FROM debian:jessie
 MAINTAINER IgorSh
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN groupadd -r -g 1000 games && useradd -r -g games -u 1000 games
+RUN groupadd -r -g 1000 crawluser && useradd -r -g crawluser -u 1000 crawluser
 
 # install required packages
 RUN apt-get update 
@@ -52,17 +52,17 @@ RUN git clone https://github.com/crawl/crawl.git && cd /crawl \
 	&& mkdir -p /crawl/crawl-ref/source/rcs 
 
 # make webtile version
-RUN cd /crawl/crawl-ref/source && make WEBTILES=y USE_DGAMELAUNCH=y
+RUN cd /crawl/crawl-ref/source && make WEBTILES=y
 
 COPY docker-entrypoint.sh /entrypoint.sh
-RUN chown -R games:games /entrypoint.sh \
+RUN chown -R crawluser:crawluser /entrypoint.sh \
 	&& chmod 777 /entrypoint.sh
-	&& chown -R games:games /crawl
+	&& chown -R crawluser:crawluser /crawl
 
 WORKDIR /crawl/crawl-ref/source
 VOLUME /crawl
 EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]
 
-#USER games
+#USER crawluser
 CMD ["python ./webserver/server.py"]
