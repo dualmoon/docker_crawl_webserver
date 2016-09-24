@@ -11,7 +11,7 @@ RUN apt-get update
     wget \
     git \
     python-pip
-RUN apt-get update 
+RUN apt-get update \ 
 	&& apt-get install --no-install-recommends --no-install-suggests -y \
     gcc \
     build-essential \
