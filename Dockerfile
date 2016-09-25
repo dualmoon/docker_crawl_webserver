@@ -59,6 +59,18 @@ COPY docker-entrypoint.sh /entrypoint.sh
 RUN chown -R crawluser:crawluser /entrypoint.sh \
 	&& chmod 777 /entrypoint.sh \
 	&& chown -R crawluser:crawluser /crawl
+RUN apt-get update \
+        && apt-get install -y \
+    locales
+ 
+RUN touch /etc/locale.conf && echo "LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8" > /etc/locale.conf \
+	&& locale-gen en_US.UTF-8 \
+	&& echo "146\n3\n" | dpkg-reconfigure locales
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+ENV LC_CTYPE en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
 
 WORKDIR /crawl/crawl-ref/source
 VOLUME /crawl
