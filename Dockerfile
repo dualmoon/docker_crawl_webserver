@@ -49,6 +49,7 @@ RUN git clone https://github.com/crawl/crawl.git && cd /crawl \
 RUN apt-get update \ 
 	&& apt-get install --no-install-recommends --no-install-suggests -y \
     build-essential \
+    python-dev \
     libncursesw5-dev \
     bison \
     flex \
@@ -65,7 +66,7 @@ RUN apt-get update \
         && rm -rf /var/lib/apt/lists/*
 
 # install pip and tornado for web server
-RUN pip install -U pip && pip install tornado pyyaml 
+RUN pip install -U pip && pip install 'tornado<4.0' pyyaml 
 
 # make webtile version
 RUN cd /crawl/crawl-ref/source && make WEBTILES=y
