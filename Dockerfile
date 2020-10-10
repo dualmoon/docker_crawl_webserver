@@ -65,7 +65,7 @@ RUN apt-get update \
         && rm -rf /var/lib/apt/lists/*
 
 # install pip and tornado for web server
-RUN pip install -U pip && pip install 'tornado>=3.0,<4.0' 
+RUN pip install -U pip && pip install tornado pyyaml 
 
 # make webtile version
 RUN cd /crawl/crawl-ref/source && make WEBTILES=y
