@@ -21,6 +21,7 @@ RUN git clone https://github.com/crawl/crawl.git && cd /crawl \
 
 RUN apt install -y \
 		build-essential \
+		libncursesw5 \
 		libncursesw5-dev \
 		bison \
 		flex \
